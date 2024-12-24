@@ -88,6 +88,10 @@ public class MsgProcessor {
             }
 
         } else if (cmd.equals(MsgActionEnum.CHAT.getName())) {
+            if (!onlineUsers.contains(client)) {
+                onlineUsers.add(client);
+                onlineUserSet.add(client.id());
+            }
             String sender = msg.getSender();
             for (Channel channel : onlineUsers) {
                 boolean isSelf = (channel == client);
@@ -101,8 +105,6 @@ public class MsgProcessor {
             }
 
         } else if (cmd.equals(MsgActionEnum.LOGOUT.getName())) {
-            client.close();
-            onlineUserSet.remove(client.id());
             for (Channel channel : onlineUsers) {
                 msg.setCmd(MsgActionEnum.SYSTEM.getName());
                 msg.setOnline(onlineUsers.size());
@@ -110,6 +112,8 @@ public class MsgProcessor {
                 String content = CoderUtil.encode(msg);
                 channel.writeAndFlush(content);
             }
+            client.close();
+            onlineUserSet.remove(client.id());
         } else if (cmd.equals(MsgActionEnum.KEEPALIVE.getName())) {
             log.info("收到来自channelId为[" + client.id() + "]的心跳包...");
         }

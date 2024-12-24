@@ -1,17 +1,13 @@
 package com.irving.netty.chat.handler;
 
+import com.alibaba.fastjson.JSON;
 import com.irving.netty.chat.processor.MsgProcessor;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import lombok.extern.slf4j.Slf4j;
 
-/**
- * @author luojun
- * @version 1.0.0
- * @ClassName ChatServerHandler
- * @Description 处理消息的handler
- * @createTime 2021/11/14 3:01
- */
+@Slf4j
 public class ChatServerHandler  extends SimpleChannelInboundHandler<String> {
 
     private MsgProcessor processor = new MsgProcessor();
@@ -20,6 +16,7 @@ public class ChatServerHandler  extends SimpleChannelInboundHandler<String> {
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         Channel channel = ctx.channel();
         System.out.println("客户端 " + channel.remoteAddress() + "上线\n");
+        System.out.println("channel: " + JSON.toJSONString(channel));
     }
 
     /**
@@ -30,6 +27,7 @@ public class ChatServerHandler  extends SimpleChannelInboundHandler<String> {
      */
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
+        System.out.println("msg1: " + msg);
         processor.dealMsg(ctx, msg);
     }
 
