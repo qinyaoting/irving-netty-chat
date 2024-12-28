@@ -45,7 +45,7 @@ public class HeartBeatHandler extends ChannelInboundHandlerAdapter {
                 break;
         }
 
-        log.info(ctx.channel().remoteAddress() + "超时事件：" + eventType);
+        //log.info(ctx.channel().remoteAddress() + "超时事件：" + eventType);
         /*if(readIdleTimes >= 30){
             log.info("channel关闭前，users的数量为：" + MsgProcessor.onlineUsers.size());
             Channel channel = ctx.channel();

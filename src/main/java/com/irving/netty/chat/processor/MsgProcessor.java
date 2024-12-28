@@ -30,6 +30,7 @@ public class MsgProcessor {
     // 可以使用ChannelGroup来将Channel分类到一个有特别意义的组中。
     // 当组中的channel关闭时会自动从组中移除，因此我们不需要担心添加进去的channel的生命周期。
     public static ChannelGroup onlineUsers = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
+    public static ChannelGroup clientChannels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
     // 由于我们这里会处理http中对应的channel，所以在关闭的时候我们需要判断这个关闭的channl是不是我们socket对应的
     // channl，而ChannelGroup在channel关闭时会自动从组中移除，所以我们这里单独记录一下，这样我们可以判断如果某个
     // socket对应的channel关闭，我们可以通知其他人某人下线
@@ -56,8 +57,31 @@ public class MsgProcessor {
      */
     public void dealMsg(ChannelHandlerContext ctx, Object msg) {
         // 编解码
-        IMMessage decode = CoderUtil.decode(msg.toString());
-        dealMsg(ctx, decode);
+        //IMMessage decode = CoderUtil.decode(msg.toString());
+        //dealMsg(ctx, decode);
+        Channel channel = ctx.channel();
+        if (!clientChannels.contains(channel)) {
+            clientChannels.add(channel);
+        }
+        String str = (String) msg;
+        if (str.startsWith("FF")) {
+            for (Channel ch : clientChannels) {
+                boolean isSelf = (ch == channel);
+                if (!isSelf) {
+                    System.out.println("send hb FFSS===========");
+                    ch.writeAndFlush("FFSS===========");
+                }
+            }
+        } else {
+            for (Channel ch : clientChannels) {
+                boolean isSelf = (ch == channel);
+                if (!isSelf) {
+                    System.out.println("content===========");
+                    ch.writeAndFlush("content===========");
+                }
+            }
+        }
+
     }
 
     public void dealMsg(ChannelHandlerContext ctx, IMMessage msg) {
@@ -73,20 +97,22 @@ public class MsgProcessor {
             client.attr(IP_ADDR).getAndSet(addr);
             client.attr(TERMINAL).getAndSet(msg.getTerminal());
             // 把这个用户保存一个统一容器中，方便给所有用户发送消息
-            onlineUsers.add(client);
-            onlineUserSet.add(client.id());
+            if (!onlineUsers.contains(client)) {
+                onlineUsers.add(client);
+                onlineUserSet.add(client.id());
+            }
             for (Channel channel : onlineUsers) {
                 boolean isSelf = (channel == client);
-                System.out.println(msg);
+                //System.out.println(msg);
                 if (isSelf) {
                     msg = new IMMessage(MsgActionEnum.SYSTEM.getName(), msg.getTime(), onlineUsers.size(), null, "已与服务器建立连接！");
                 } else {
                     msg = new IMMessage(MsgActionEnum.SYSTEM.getName(), msg.getTime(), onlineUsers.size(), getNickName(client), getNickName(client) + "加入");
                 }
                 String content = CoderUtil.encode(msg);
+                System.out.println("====send msg to client:" + content);
                 channel.writeAndFlush(content);
             }
-
         } else if (cmd.equals(MsgActionEnum.CHAT.getName())) {
             if (!onlineUsers.contains(client)) {
                 onlineUsers.add(client);
@@ -101,6 +127,7 @@ public class MsgProcessor {
                     msg.setSender(sender);
                 }
                 String content = CoderUtil.encode(msg);
+                System.out.println("====send msg to client:" + msg);
                 channel.writeAndFlush(content);
             }
 
@@ -112,8 +139,9 @@ public class MsgProcessor {
                 String content = CoderUtil.encode(msg);
                 channel.writeAndFlush(content);
             }
-            client.close();
+            onlineUsers.remove(client);
             onlineUserSet.remove(client.id());
+            client.close();
         } else if (cmd.equals(MsgActionEnum.KEEPALIVE.getName())) {
             log.info("收到来自channelId为[" + client.id() + "]的心跳包...");
         }
