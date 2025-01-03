@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.VehicleChargeClassMapper">
+    <select id="queryVehicleClassWithIU" resultType="VehicleChargeClass">
+        SELECT
+            id,vehicle_type as vehicleType,vehicle_desc as vehicleDesc, iu_prefix as iuPrefix,
+            create_time as createTime, update_time as updateTime,  hour_charge as hourCharge
+        FROM vehiclechargeclass
+    </select>
+
+</mapper>

@@ -1,8 +1,12 @@
 package com.example.demo.processor;
 
 import com.alibaba.fastjson.JSONObject;
+import com.example.demo.mapper.VehicleChargeClassMapper;
+import com.example.demo.model.User;
+import com.example.demo.model.VehicleChargeClass;
 import com.example.demo.protocol.IMMessage;
 import com.example.demo.protocol.MsgActionEnum;
+import com.example.demo.service.UserService;
 import com.example.demo.util.CoderUtil;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
@@ -11,8 +15,11 @@ import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.util.AttributeKey;
 import io.netty.util.concurrent.GlobalEventExecutor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -47,14 +54,18 @@ public class MsgProcessor {
     public static final AttributeKey<JSONObject> ATTRS = AttributeKey.valueOf("attrs");
     // 终端
     public static final AttributeKey<String> TERMINAL = AttributeKey.valueOf("terminal");
-
-
-    /**
-     * 发送消息（netty）
-     *
-     * @param ctx
-     * @param msg
-     */
+    public void sendMsg(String clientPort,String msg) {
+        for (Channel ch : clientChannels) {
+            String address = ch.remoteAddress().toString();
+            if (address.endsWith("101")) {
+                ch.writeAndFlush("SS|101|2|"+msg + "|SE");
+            } else if (address.endsWith("102")) {
+                ch.writeAndFlush("SS|102|2|"+msg + "|SE");
+            } else {
+                log.debug("wrong client.");
+            }
+        }
+    }
     public void dealMsg(ChannelHandlerContext ctx, Object msg) {
         // 编解码
         //IMMessage decode = CoderUtil.decode(msg.toString());
@@ -64,23 +75,34 @@ public class MsgProcessor {
             clientChannels.add(channel);
         }
         String str = (String) msg;
-        if (str.startsWith("FF")) {
+        /*if (str.startsWith("FF")) {
             for (Channel ch : clientChannels) {
-                boolean isSelf = (ch == channel);
-                if (!isSelf) {
-                    System.out.println("send hb FFSS===========");
-                    ch.writeAndFlush("FFSS===========");
+                String address = ch.remoteAddress().toString();
+                if (address.endsWith("101")) {
+                    ch.writeAndFlush("SS|HB|101|SE");
+                } else if (address.endsWith("102")) {
+                    ch.writeAndFlush("SS|HB|102|SE");
+                } else {
+
                 }
             }
         } else {
             for (Channel ch : clientChannels) {
-                boolean isSelf = (ch == channel);
+                *//*boolean isSelf = (ch == channel);
                 if (!isSelf) {
                     System.out.println("content===========");
                     ch.writeAndFlush("content===========");
+                }*//*
+                String address = ch.remoteAddress().toString();
+                if (address.endsWith("101")) {
+                    //ch.writeAndFlush("SS101==========="+ JSONObject.toJSONString(UserService.getAllUsers()));
+                } else if (address.endsWith("102")) {
+                    ch.writeAndFlush("SS102===========");
+                } else {
+
                 }
             }
-        }
+        }*/
 
     }
 
