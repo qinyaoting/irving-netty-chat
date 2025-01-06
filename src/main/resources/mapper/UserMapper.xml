@@ -7,4 +7,13 @@
     <select id="findAll" resultType="com.example.demo.model.User">
         SELECT * FROM users
     </select>
+
+
+    <insert id="insertUsers">
+        INSERT INTO users (name, age)
+        VALUES
+        <foreach collection="users" item="user" separator=",">
+            (#{user.name}, #{user.age})
+        </foreach>
+    </insert>
 </mapper>

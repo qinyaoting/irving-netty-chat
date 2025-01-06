@@ -1,10 +1,14 @@
 package com.example.demo.handler;
 
+import com.alibaba.fastjson.JSON;
+import com.example.demo.model.Trans;
 import com.example.demo.processor.MsgProcessor;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.List;
 
 @Slf4j
 public class ChatServerHandler  extends SimpleChannelInboundHandler<String> {
@@ -30,9 +34,6 @@ public class ChatServerHandler  extends SimpleChannelInboundHandler<String> {
         String str = msg.contains("\n")?msg.replace("\n", ""):msg;
         System.out.println(String.format("server get ip:%s  ---- msg:%s ", ch.remoteAddress(), str));
         processor.dealMsg(ctx, msg);
-        // entry live
-        // exit live
-        // entry live -> exit
     }
 
     @Override

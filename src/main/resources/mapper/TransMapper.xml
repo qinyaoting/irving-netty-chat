@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.TransMapper">
+    <insert id="addTrans" >
+        insert into trans (create_datetime,device_iu,card_can,card_type,enter_datetime,hour_rate,vehicle_type,pay_type,tax_rate,entry_gate_num, pay_status,
+            exit_id,entry_id,exit_gate_num,leave_datetime,total_second,cost,tax_cost,total_cost,pay_datetime,auto_payment_payload_id,receipt_id)
+            value (#{createDatetime},#{deviceIU},#{cardCan},#{cardType},#{enterDatetime},#{hourRate},#{vehicleType},#{payType},#{taxRate},#{entryGateNum},#{payStatus},
+                   #{exitId},#{entryId},#{exitGateNum},#{leaveDatetime},#{totalSecond},#{cost},#{taxCost},#{totalCost},#{payDatetime},
+                   #{autoPaymentPayloadId},#{receiptId})
+    </insert>
+
+    <insert id="insertTrans" >
+        insert into trans (create_datetime,device_iu,card_can,card_type,enter_datetime,hour_rate,vehicle_type,pay_type,tax_rate,entry_gate_num, pay_status,
+                           exit_id,entry_id,exit_gate_num,leave_datetime,total_second,cost,tax_cost,total_cost,pay_datetime,auto_payment_payload_id,receipt_id)
+            values
+            <foreach collection="trans" item="tran" separator=",">
+                (#{tran.createDatetime},#{tran.deviceIU},#{tran.cardCan},#{tran.cardType},#{tran.enterDatetime},#{tran.hourRate},#{tran.vehicleType},#{tran.payType},#{tran.taxRate},#{tran.entryGateNum},#{tran.payStatus},
+                   #{tran.exitId},#{tran.entryId},#{tran.exitGateNum},#{tran.leaveDatetime},#{tran.totalSecond},#{tran.cost},#{tran.taxCost},#{tran.totalCost},#{tran.payDatetime},
+                   #{tran.autoPaymentPayloadId},#{tran.receiptId})
+            </foreach>
+    </insert>
+
+</mapper>

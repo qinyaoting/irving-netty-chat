@@ -60,7 +60,7 @@ public class BinlogService {
                         for (Serializable[] row : rows) {
                             //System.out.println(Joiner.on(",").join(row.to));
                             String operateFlag = row[2].toString();
-                            String jsonData = new String((byte[]) row[6], StandardCharsets.UTF_8); // 使用合适的字符编码
+                            String jsonData = new String((byte[]) row[6], StandardCharsets.UTF_8) ; // 使用合适的字符编码
                             if (operateFlag .equals("2")) {            // vehicle class by IU
                                 String[] destStr = row[5].toString().split("-");
                                 Arrays.stream(destStr).forEach(dest ->processor.sendMsg(dest, jsonData));

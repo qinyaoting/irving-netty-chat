@@ -8,7 +8,7 @@
         SELECT
             id,vehicle_type as vehicleType,vehicle_desc as vehicleDesc, iu_prefix as iuPrefix,
             create_time as createTime, update_time as updateTime,  hour_charge as hourCharge
-        FROM vehiclechargeclass
+        FROM vehicle_charge_class
     </select>
 
 </mapper>
