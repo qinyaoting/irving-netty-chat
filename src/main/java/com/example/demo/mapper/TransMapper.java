@@ -22,7 +22,7 @@ public interface TransMapper {
 
     int deleteTrans(Integer id);
 
-    List<VehicleChargeClass> queryVehicleClassWithIU();
+    List<VehicleChargeClass> queryVehicleClassList();
 
     int insertTrans(@Param("trans") List<Trans> trans);
 }

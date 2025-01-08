@@ -11,4 +11,5 @@ public class VehicleChargeClass {
     private String createTime;
     private String updateTime;
     private int hourCharge;
+    private int textRage;
 }

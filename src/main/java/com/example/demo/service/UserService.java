@@ -18,6 +18,6 @@ public  class UserService {
     }
 
     public static List<VehicleChargeClass> getAllVehicleCharge() {
-        return vehicleChargeClassMapper.queryVehicleClassWithIU();
+        return vehicleChargeClassMapper.queryVehicleClassList();
     }
 }

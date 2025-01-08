@@ -1,5 +1,6 @@
 package com.example.demo.mapper;
 
+import com.example.demo.model.Season;
 import com.example.demo.model.UserInfo;
 import com.example.demo.model.VehicleChargeClass;
 import org.apache.ibatis.annotations.Mapper;
@@ -10,6 +11,7 @@ import java.util.List;
 @Mapper
 @Repository
 public interface VehicleChargeClassMapper {
-    List<VehicleChargeClass> queryVehicleClassWithIU();
+    List<VehicleChargeClass> queryVehicleClassList();
+    List<Season> querySeasonList();
 
 }

@@ -4,11 +4,18 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.demo.mapper.VehicleChargeClassMapper">
-    <select id="queryVehicleClassWithIU" resultType="VehicleChargeClass">
+    <select id="queryVehicleClassList" resultType="VehicleChargeClass">
         SELECT
-            id,vehicle_type as vehicleType,vehicle_desc as vehicleDesc, iu_prefix as iuPrefix,
-            create_time as createTime, update_time as updateTime,  hour_charge as hourCharge
+            id, vehicle_type as vehicleType,vehicle_desc as vehicleDesc, iu_prefix as iuPrefix,
+            create_time as createTime, update_time as updateTime,  hour_charge as hourCharge,
+            tax_rate as taxRate
         FROM vehicle_charge_class
     </select>
 
+    <select id="querySeasonList" resultType="Season">
+        SELECT
+            id, PlateNo as deviceIU, PlateNo2 as vehicleNo,BeginDate as effectiveDate , EndDate as expiredDate,
+            CreateDate as createDatetime, ChangeTime as updateDatetime
+        FROM carissueinfo
+    </select>
 </mapper>
