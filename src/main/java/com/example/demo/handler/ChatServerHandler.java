@@ -19,7 +19,7 @@ public class ChatServerHandler  extends SimpleChannelInboundHandler<String> {
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         Channel channel = ctx.channel();
         String str = String.format("客户端上线 channelId:%s, ip:%s",channel.id(),channel.localAddress(),channel.remoteAddress());
-        //System.out.println("channel: " + JSON.toJSONString(channel));
+        System.out.println("channel: " + JSON.toJSONString(channel));
     }
 
     /**
@@ -49,6 +49,7 @@ public class ChatServerHandler  extends SimpleChannelInboundHandler<String> {
      */
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        System.out.println("channel: " + JSON.toJSONString(ctx.channel()));
         processor.removeChannelSendMsg(ctx.channel());
     }
 }

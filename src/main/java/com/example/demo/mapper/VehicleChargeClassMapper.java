@@ -1,5 +1,6 @@
 package com.example.demo.mapper;
 
+import com.example.demo.model.Holiday;
 import com.example.demo.model.Season;
 import com.example.demo.model.UserInfo;
 import com.example.demo.model.VehicleChargeClass;
@@ -13,5 +14,6 @@ import java.util.List;
 public interface VehicleChargeClassMapper {
     List<VehicleChargeClass> queryVehicleClassList();
     List<Season> querySeasonList();
+    List<Holiday> queryHolidayList(String year);
 
 }

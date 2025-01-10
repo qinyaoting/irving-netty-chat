@@ -1,5 +1,6 @@
 package com.example.demo.mapper;
 
+import com.example.demo.model.Settlement;
 import com.example.demo.model.Trans;
 import com.example.demo.model.UserInfo;
 import com.example.demo.model.VehicleChargeClass;
@@ -25,4 +26,8 @@ public interface TransMapper {
     List<VehicleChargeClass> queryVehicleClassList();
 
     int insertTrans(@Param("trans") List<Trans> trans);
+
+    int insertSettlement(@Param("settlement") List<Settlement> settlement);
+
+    int makeSettlementsExpired(String serverSyncDatetime);
 }

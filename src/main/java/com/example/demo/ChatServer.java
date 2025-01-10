@@ -35,6 +35,8 @@ public class ChatServer implements DisposableBean {
         serverBootstrap.group(bossGroup, workerGroup)
                 .channel(NioServerSocketChannel.class)
                 .option(ChannelOption.SO_BACKLOG, 1024)
+                // android app重启,连接netty  server address already use 怎么解决
+                //x.childOption(ChannelOption.SO_REUSEADDR, true)
                 .childHandler(new ChatServerChannelInitializer());
     }
 

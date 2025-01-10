@@ -238,7 +238,7 @@ public class MsgProcessor {
      * 当客户端断开或者关闭时候，我们需要移除channel
      */
     public void removeChannelSendMsg(Channel client) {
-        String nickName = getNickName(client);
+        /*String nickName = getNickName(client);
 
         //如果没有就说明不是对应websocket请求就不需要发送信息
         if (!onlineUserSet.remove(client.id())) {
@@ -251,6 +251,10 @@ public class MsgProcessor {
 
             String content = CoderUtil.encode(msg);
             channel.writeAndFlush(content);
-        }
+        }*/
+        System.out.println("disconnect");
+        clientChannels.remove(client);
+        onlineUsers.remove(client);
+        client.close();
     }
 }

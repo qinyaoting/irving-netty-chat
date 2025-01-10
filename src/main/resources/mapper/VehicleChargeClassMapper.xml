@@ -7,9 +7,9 @@
     <select id="queryVehicleClassList" resultType="VehicleChargeClass">
         SELECT
             id, vehicle_type as vehicleType,vehicle_desc as vehicleDesc, iu_prefix as iuPrefix,
-            create_time as createTime, update_time as updateTime,  hour_charge as hourCharge,
+            create_datetime as createDatetime, update_datetime as updateDatetime,  hour_charge as hourCharge,
             tax_rate as taxRate
-        FROM vehicle_charge_class
+        FROM t_vehicle_charge_class
     </select>
 
     <select id="querySeasonList" resultType="Season">
@@ -17,5 +17,11 @@
             id, PlateNo as deviceIU, PlateNo2 as vehicleNo,BeginDate as effectiveDate , EndDate as expiredDate,
             CreateDate as createDatetime, ChangeTime as updateDatetime
         FROM carissueinfo
+    </select>
+
+    <select id="queryHolidayList" parameterType="string" resultType="Holiday" >
+        select
+            id, holiday, holiday_name as holidayName, year, create_datetime as createDatetime, update_datetime as updateDatetime
+            from t_holiday where year=#{year}
     </select>
 </mapper>

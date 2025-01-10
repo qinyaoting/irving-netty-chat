@@ -8,8 +8,8 @@ public class VehicleChargeClass {
     private String vehicleType;
     private String vehicleDesc;
     private String iuPrefix;
-    private String createTime;
-    private String updateTime;
+    private String createDatetime;
+    private String updateDatetime;
     private int hourCharge;
-    private int textRage;
+    private int taxRate;
 }

@@ -5,7 +5,7 @@
 
 <mapper namespace="com.example.demo.mapper.TransMapper">
     <insert id="addTrans" >
-        insert into trans (create_datetime,device_iu,card_can,card_type,enter_datetime,hour_rate,vehicle_type,pay_type,tax_rate,entry_gate_num, pay_status,
+        insert into t_trans (create_datetime,device_iu,card_can,card_type,enter_datetime,hour_rate,vehicle_type,pay_type,tax_rate,entry_gate_num, pay_status,
             exit_id,entry_id,exit_gate_num,leave_datetime,total_second,cost,tax_cost,total_cost,pay_datetime,auto_payment_payload_id,receipt_id)
             value (#{createDatetime},#{deviceIU},#{cardCan},#{cardType},#{enterDatetime},#{hourRate},#{vehicleType},#{payType},#{taxRate},#{entryGateNum},#{payStatus},
                    #{exitId},#{entryId},#{exitGateNum},#{leaveDatetime},#{totalSecond},#{cost},#{taxCost},#{totalCost},#{payDatetime},
@@ -13,7 +13,7 @@
     </insert>
 
     <insert id="insertTrans" >
-        insert into trans (create_datetime,device_iu,card_can,card_type,enter_datetime,hour_rate,vehicle_type,pay_type,tax_rate,entry_gate_num, pay_status,
+        insert into t_trans (create_datetime,device_iu,card_can,card_type,enter_datetime,hour_rate,vehicle_type,pay_type,tax_rate,entry_gate_num, pay_status,
                            exit_id,entry_id,exit_gate_num,leave_datetime,total_second,cost,tax_cost,total_cost,pay_datetime,auto_payment_payload_id,receipt_id)
             values
             <foreach collection="trans" item="tran" separator=",">
@@ -22,5 +22,23 @@
                    #{tran.autoPaymentPayloadId},#{tran.receiptId})
             </foreach>
     </insert>
+
+
+    <insert id="insertSettlement" >
+        insert into t_settlement (
+        exit_id, station_name, sof_acquirer, sof_name, sof_tid, sof_mid,
+        sof_sale_count, sof_sale_total, sof_topup_count, sof_topup_total, year, month, day,
+        create_datetime,  update_datetime, server_sync_datetime )
+        values
+        <foreach collection="settlement" item="settle" separator=",">
+            (#{settle.exitId},#{settle.stationName},#{settle.sofAcquirer},#{settle.sofName} ,#{settle.sofTid} ,#{settle.sofMid},
+            #{settle.sofSaleCount},#{settle.sofSaleTotal},#{settle.sofTopupCount},#{settle.sofTopupTotal},YEAR(CURDATE()),MONTH(CURDATE()),DAY(CURDATE()),
+            #{settle.createDatetime},#{settle.createDatetime},#{settle.serverSyncDatetime} )
+        </foreach>
+    </insert>
+
+    <update id="makeSettlementsExpired" parameterType="string">
+        update t_settlement set server_sync_flag = 0 AND update_datetime=now()  where server_sync_datetime != #{serverSyncDatetime}
+    </update>
 
 </mapper>
