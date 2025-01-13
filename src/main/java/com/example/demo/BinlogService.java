@@ -55,7 +55,7 @@ public class BinlogService {
                     String message = String.format("INSERT事件：表 %s 插入了 %d 行数据", tableName, rowsCount);
                     System.out.println(message);
                     binlogChanges.offer(message);
-                    if (tableName.equals("operation_log")) {
+                    if (tableName.equals("t_operation_log")) {
                         List<Serializable[]> rows = data.getRows();
                         for (Serializable[] row : rows) {
                             //System.out.println(Joiner.on(",").join(row.to));

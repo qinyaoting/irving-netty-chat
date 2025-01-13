@@ -35,6 +35,8 @@ public class Trans implements Serializable {
     private String  cost;
     private String  taxCost;
     private String  totalCost;
+    private String payCard;
+    private String attachJson;
     private String payDatetime;
     private long autoPaymentPayloadId;
     private long receiptId;
