@@ -1,9 +1,6 @@
 package com.example.demo.mapper;
 
-import com.example.demo.model.Settlement;
-import com.example.demo.model.Trans;
-import com.example.demo.model.UserInfo;
-import com.example.demo.model.VehicleChargeClass;
+import com.example.demo.model.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -28,6 +25,10 @@ public interface TransMapper {
     int insertTrans(@Param("trans") List<Trans> trans);
 
     int insertSettlement(@Param("settlement") List<Settlement> settlement);
+
+    int insertDeviceStatus(@Param("deviceStatus") DeviceStatus deviceStatus);
+
+    int insertDeviceStatusList(@Param("deviceStatusList") List<DeviceStatus> deviceStatusList);
 
     int makeSettlementsExpired(String serverSyncDatetime);
 }

@@ -17,7 +17,7 @@ import java.util.List;
 public class ConfigController {
 
     @Autowired
-    private VehicleChargeClassMapper vehicleChargeMapper;;
+    private VehicleChargeClassMapper vehicleChargeMapper;
     @GetMapping("/vehicle_charge")
     public List<VehicleChargeClass> getAllVehicleClass() {
         return vehicleChargeMapper.queryVehicleClassList();
@@ -25,12 +25,7 @@ public class ConfigController {
 
     @GetMapping("/timestamp")
     public String getSystemTimestamp() {
-        return ""+System.currentTimeMillis();
-    }
-
-    @GetMapping("/holiday")
-    public String getCurYearHoliday() {
-        return ""+System.currentTimeMillis();
+        return ""+(System.currentTimeMillis());
     }
 
     @GetMapping("/season")

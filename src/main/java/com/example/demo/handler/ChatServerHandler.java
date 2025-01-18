@@ -1,15 +1,22 @@
 package com.example.demo.handler;
 
 import com.alibaba.fastjson.JSON;
+import com.example.demo.mapper.TransMapper;
+import com.example.demo.model.DeviceStatus;
 import com.example.demo.model.Trans;
 import com.example.demo.processor.MsgProcessor;
+import com.example.demo.service.TransService;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.extern.slf4j.Slf4j;
+import org.joda.time.DateTime;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 @Slf4j
 public class ChatServerHandler  extends SimpleChannelInboundHandler<String> {
 
@@ -33,6 +40,14 @@ public class ChatServerHandler  extends SimpleChannelInboundHandler<String> {
         Channel ch = ctx.channel();
         String str = msg.contains("\n")?msg.replace("\n", ""):msg;
         System.out.println(String.format("server get ip:%s  ---- msg:%s ", ch.remoteAddress(), str));
+        String clientIp = ch.remoteAddress().toString();
+        String stationType = clientIp.endsWith("101")?"entry":"exit";
+        String now = DateTime.now().toString();
+        DeviceStatus deviceStatus = DeviceStatus.builder().stationName(stationType).deviceName(clientIp).pingDatetime(now)
+                .event("heartbeat").createDatetime(now).updateDatetime(now)
+                //.attachJson("json").errorMsg("normal")
+                .build();
+        //TransService.addDeviceStatus(deviceStatus);
         processor.dealMsg(ctx, msg);
     }
 

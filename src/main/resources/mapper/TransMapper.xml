@@ -43,4 +43,25 @@
         AND server_sync_datetime != #{serverSyncDatetime}
     </update>
 
+
+    <insert id="insertDeviceStatus" >
+        insert into t_device_status (
+            station_name, device_name, ping_datetime, attach_json, error_msg, remark,
+                                     event, sid, create_datetime, update_datetime)
+        values
+            (#{stationName}, #{deviceName}, #{pingDatetime}, #{attachJson}, #{errorMsg}, #{remark},
+                                    #{event}, #{sid}, #{createDatetime}, #{updateDatetime})
+    </insert>
+
+    <insert id="insertDeviceStatusList" >
+        insert into t_device_status (
+        station_name, device_name, ping_datetime, attach_json, error_msg, remark,
+        event, sid, create_datetime, update_datetime)
+        values
+        <foreach collection="deviceStatusList" item="status" separator=",">
+            (#{status.stationName}, #{status.deviceName}, #{status.pingDatetime}, #{status.attachJson}, #{status.errorMsg}, #{status.remark},
+            #{status.event}, #{status.sid}, #{status.createDatetime}, #{status.updateDatetime})
+        </foreach>
+    </insert>
+
 </mapper>
