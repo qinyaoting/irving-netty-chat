@@ -22,7 +22,7 @@ public interface TransMapper {
 
     List<VehicleChargeClass> queryVehicleClassList();
 
-    int insertTrans(@Param("trans") List<Trans> trans);
+    int insertTranList(@Param("trans") List<Trans> trans);
 
     int insertSettlement(@Param("settlement") List<Settlement> settlement);
 

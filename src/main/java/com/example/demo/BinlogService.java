@@ -61,10 +61,8 @@ public class BinlogService {
                             //System.out.println(Joiner.on(",").join(row.to));
                             String operateFlag = row[2].toString();
                             String jsonData = new String((byte[]) row[6], StandardCharsets.UTF_8) ;
-                            if (operateFlag .equals("2")) {            // vehicle class by IU
-                                String[] destStr = row[5].toString().split("-");
-                                Arrays.stream(destStr).forEach(dest ->processor.sendMsg(dest, jsonData));
-                            }
+                            String[] destStr = row[5].toString().split("-");
+                            Arrays.stream(destStr).forEach(dest ->processor.sendMsg(dest,operateFlag, jsonData));
                         }
                     }
                 }

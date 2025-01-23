@@ -11,4 +11,11 @@ mybatis:
       type-aliases-package: com.example.demo.model
       configuration:
         log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+logging:
+  level:
+    web: debug
+thymeleaf:
+  prefix: classpath:/templates/
+  suffix: .html
+  cache: false
 

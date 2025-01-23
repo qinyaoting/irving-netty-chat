@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Vehicle Charge List</title>
+</head>
+<body>
+<h1>Vehicle Charge List</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Vehicle Type</th>
+        <th>Hour Charge</th>
+        <th>Tax Rate</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${list}">
+        <td th:text="${item.id}"></td>
+        <td th:text="${item.vehicleType}"></td>
+        <td th:text="${item.hourCharge}"></td>
+        <td th:text="${item.taxRate}"></td>
+        <td>
+            <a th:href="@{/vehicle_charge/form(id=${item.id})}">Edit</a> |
+            <a th:href="@{/vehicle_charge/delete(id=${item.id})}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a th:href="@{/vehicle_charge/form}">Add New</a>
+</body>
+</html>

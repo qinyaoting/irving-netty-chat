@@ -13,11 +13,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Component
 @Slf4j
+@Component
 public class ChatServerHandler  extends SimpleChannelInboundHandler<String> {
 
     private MsgProcessor processor = new MsgProcessor();
@@ -47,7 +48,7 @@ public class ChatServerHandler  extends SimpleChannelInboundHandler<String> {
                 .event("heartbeat").createDatetime(now).updateDatetime(now)
                 //.attachJson("json").errorMsg("normal")
                 .build();
-        //TransService.addDeviceStatus(deviceStatus);
+        //TransService.saveApiPing(deviceStatus);
         processor.dealMsg(ctx, msg);
     }
 

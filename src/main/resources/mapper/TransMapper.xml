@@ -12,7 +12,7 @@
                    #{autoPaymentPayloadId},#{receiptId})
     </insert>
 
-    <insert id="insertTrans" >
+    <insert id="insertTranList" >
         insert into t_trans (create_datetime,device_iu,card_can,card_type,enter_datetime,hour_rate,vehicle_type,pay_type,tax_rate,entry_gate_num, pay_status,
                            exit_id,entry_id,exit_gate_num,leave_datetime,total_second,cost,tax_cost,total_cost,pay_datetime,pay_card,attach_json,auto_payment_payload_id,receipt_id)
             values

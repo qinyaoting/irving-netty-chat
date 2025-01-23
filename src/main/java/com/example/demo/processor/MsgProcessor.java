@@ -54,13 +54,13 @@ public class MsgProcessor {
     public static final AttributeKey<JSONObject> ATTRS = AttributeKey.valueOf("attrs");
     // 终端
     public static final AttributeKey<String> TERMINAL = AttributeKey.valueOf("terminal");
-    public void sendMsg(String clientPort, String msg) {
+    public void sendMsg(String clientPort, String operation, String msg) {
         for (Channel ch : clientChannels) {
             String address = ch.remoteAddress().toString();
             if (address.endsWith("101")) {
-                ch.writeAndFlush("SS|101|2|"+msg + "|SE" );
+                ch.writeAndFlush("SS|101|"+operation+"|"+msg + "|SE" );
             } else if (address.endsWith("102")) {
-                ch.writeAndFlush("SS|102|2|"+msg + "|SE" );
+                ch.writeAndFlush("SS|102|"+operation+"|"+msg + "|SE" );
             } else {
                 log.debug("wrong client.");
             }

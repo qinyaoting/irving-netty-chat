@@ -5,14 +5,17 @@ import com.example.demo.mapper.TransMapper;
 import com.example.demo.model.DeviceStatus;
 import com.example.demo.model.Settlement;
 import com.example.demo.model.Trans;
-import com.google.common.collect.Lists;
+import com.example.demo.service.TransService;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -21,39 +24,46 @@ public class CarParkController {
 
     @Autowired
     private TransMapper transMapper;
+
+    @Autowired
+    private TransService transService;
+
     @PostMapping("/trans")
+    @ResponseBody
     public ResponseEntity<String> receiveTrans(@RequestBody List<Trans> list) {
         try {
-            int s = transMapper.insertTrans(list);
-            return ResponseEntity.ok(s + " Trans received"+ " at " + DateTime.now());
+            int s = transService.insertTranList(list);
+            return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body("success");
         } catch (Exception e) {
             log.error("receiveTrans err:" + e.getMessage()+"json:" + JSON.toJSONString(list));
         }
-        return ResponseEntity.ok("save data failed, maybe data format error");
+        return ResponseEntity.ok("failed");
     }
 
-    @PostMapping("/settlement")
-    public ResponseEntity<String> receiveSettlement(@RequestBody List<Settlement> list) {
+    @PostMapping(value ="/settlement")
+    @ResponseBody
+    public ResponseEntity<String>  receiveSettlement(@RequestBody List<Settlement> list) {
         try {
             int s = transMapper.insertSettlement(list);
             String serverSyncDatetime = list.get(0).getServerSyncDatetime();
             int cs = transMapper.makeSettlementsExpired(serverSyncDatetime);
-            return ResponseEntity.ok(s + " Settlement received."+cs +" records expired, at " + DateTime.now() );
+            return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body("success");
         } catch (Exception e) {
             log.error("receiveSettlement err:" + e.getMessage() +"json:" + JSON.toJSONString(list));
         }
-        return ResponseEntity.ok("save data failed, maybe data format error");
+        return ResponseEntity.ok("failed");
     }
 
     @PostMapping("/device_status")
+    @ResponseBody
     public ResponseEntity<String> receiveDeviceStatusList(@RequestBody List<DeviceStatus> deviceStatusList) {
         try {
-            int cs = transMapper.insertDeviceStatusList(deviceStatusList);
-            return ResponseEntity.ok("success:"+cs );
+            int cs = transService.addDeviceStatusList(deviceStatusList);
+            return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body("success");
         } catch (Exception e) {
             log.error("receiveDeviceStatus err:" + e.getMessage() +"json:" + JSON.toJSONString(deviceStatusList));
         }
-        return ResponseEntity.ok("failed:data format error?");
+        return ResponseEntity.ok("failed");
     }
 
 

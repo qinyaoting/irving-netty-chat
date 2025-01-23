@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Vehicle Charge Form</title>
+</head>
+<body>
+<h1>Vehicle Charge Form</h1>
+<form th:action="@{/vehicle_charge/save}" method="post" th:object="${vehicleCharge}">
+    <input type="hidden" th:field="*{id}" />
+    <label>Vehicle Type:</label>
+    <input type="text" th:field="*{vehicleType}" /><br>
+    <label>Vehicle Description:</label>
+    <input type="text" th:field="*{vehicleDesc}" /><br>
+    <label>IU Prefix:</label>
+    <input type="text" th:field="*{iuPrefix}" /><br>
+    <label>Hour Charge:</label>
+    <input type="number" th:field="*{hourCharge}" /><br>
+    <label>Tax Rate:</label>
+    <input type="number" th:field="*{taxRate}" /><br>
+    <button type="submit">Save</button>
+</form>
+<a th:href="@{/vehicle_charge}">Back to List</a>
+</body>
+</html>
