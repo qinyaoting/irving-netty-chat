@@ -64,4 +64,24 @@
         </foreach>
     </insert>
 
+    <update id="decreaseAvailableLots" parameterType="int">
+        <if test="isSeason == 0">
+            update t_carpark set hourly_count = hourly_count+1, lots_available = lots_available-1  where id=1
+        </if>
+        <if test="isSeason == 1">
+            update t_carpark set season_count = season_count+1, lots_available = lots_available-1  where id=1
+        </if>
+
+    </update>
+
+    <update id="increaseAvailableLots" parameterType="int">
+        <if test="isSeason == 0">
+            update t_carpark set hourly_count = hourly_count-1, lots_available = lots_available+1  where id=1
+        </if>
+        <if test="isSeason == 1">
+            update t_carpark set season_count = season_count-1, lots_available = lots_available+1  where id=1
+        </if>
+
+    </update>
+
 </mapper>

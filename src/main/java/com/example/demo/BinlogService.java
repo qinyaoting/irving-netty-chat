@@ -58,9 +58,13 @@ public class BinlogService {
                     if (tableName.equals("t_operation_log")) {
                         List<Serializable[]> rows = data.getRows();
                         for (Serializable[] row : rows) {
-                            //System.out.println(Joiner.on(",").join(row.to));
                             String operateFlag = row[2].toString();
-                            String jsonData = new String((byte[]) row[6], StandardCharsets.UTF_8) ;
+                            String jsonData;
+                            if (Objects.nonNull(row[6])) {
+                                jsonData = new String((byte[]) row[6], StandardCharsets.UTF_8) ;
+                            } else {
+                                jsonData = "{}";
+                            }
                             String[] destStr = row[5].toString().split("-");
                             Arrays.stream(destStr).forEach(dest ->processor.sendMsg(dest,operateFlag, jsonData));
                         }

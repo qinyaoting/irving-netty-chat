@@ -57,12 +57,9 @@ public class MsgProcessor {
     public void sendMsg(String clientPort, String operation, String msg) {
         for (Channel ch : clientChannels) {
             String address = ch.remoteAddress().toString();
-            if (address.endsWith("101")) {
-                ch.writeAndFlush("SS|101|"+operation+"|"+msg + "|SE" );
-            } else if (address.endsWith("102")) {
-                ch.writeAndFlush("SS|102|"+operation+"|"+msg + "|SE" );
-            } else {
-                log.debug("wrong client.");
+            if (address.endsWith(clientPort)) {
+                String cmd = String.format("SS|%s|%s|%s|SE", clientPort, operation, msg);
+                ch.writeAndFlush(cmd );
             }
         }
     }

@@ -31,4 +31,8 @@ public interface TransMapper {
     int insertDeviceStatusList(@Param("deviceStatusList") List<DeviceStatus> deviceStatusList);
 
     int makeSettlementsExpired(String serverSyncDatetime);
+
+    int decreaseAvailableLots(@Param("isSeason") int isSeason);
+
+    int increaseAvailableLots(@Param("isSeason") int isSeason);
 }

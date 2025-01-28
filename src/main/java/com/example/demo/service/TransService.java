@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.mapper.TransMapper;
+import com.example.demo.model.CarPark;
 import com.example.demo.model.DeviceStatus;
 import com.example.demo.model.Trans;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,13 @@ import java.util.List;
 
 @Service
 public  class TransService {
+    @Autowired
+    private static TransMapper staticTransMapper;
+    public TransService(TransMapper transMapper) {
+        this.transMapper = transMapper;
+        staticTransMapper = this.transMapper;
+    }
+
     @Autowired
     private TransMapper transMapper;
 
@@ -34,7 +42,17 @@ public  class TransService {
     public int addDeviceStatusList(List<DeviceStatus> deviceStatusList) {
         return transMapper.insertDeviceStatusList(deviceStatusList);
     }
-    public int saveApiPing(DeviceStatus deviceStatus) {
-        return transMapper.insertDeviceStatus(deviceStatus);
+
+    public static int saveDeviceStatus(DeviceStatus deviceStatus) {
+        return staticTransMapper.insertDeviceStatus(deviceStatus);
     }
+
+    public static int decreaseAvailableLots(int isSeason) {
+        return staticTransMapper.decreaseAvailableLots(isSeason);
+    }
+
+    public static int increaseAvailableLots(int isSeason) {
+        return staticTransMapper.increaseAvailableLots(isSeason);
+    }
+
 }
