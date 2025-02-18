@@ -60,12 +60,12 @@ public class BinlogService {
                         for (Serializable[] row : rows) {
                             String operateFlag = row[2].toString();
                             String jsonData;
-                            if (Objects.nonNull(row[6])) {
-                                jsonData = new String((byte[]) row[6], StandardCharsets.UTF_8) ;
+                            if (Objects.nonNull(row[5])) {
+                                jsonData = new String((byte[]) row[5], StandardCharsets.UTF_8) ;
                             } else {
                                 jsonData = "{}";
                             }
-                            String[] destStr = row[5].toString().split("-");
+                            String[] destStr = row[4].toString().split("-");
                             Arrays.stream(destStr).forEach(dest ->processor.sendMsg(dest,operateFlag, jsonData));
                         }
                     }

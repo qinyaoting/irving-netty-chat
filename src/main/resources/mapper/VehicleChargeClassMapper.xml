@@ -9,14 +9,14 @@
             id, vehicle_type as vehicleType,vehicle_desc as vehicleDesc, iu_prefix as iuPrefix,
             create_datetime as createDatetime, update_datetime as updateDatetime,  hour_charge as hourCharge,
             tax_rate as taxRate
-        FROM t_vehicle_charge_class
+        FROM t_vehicle_charge
     </select>
 
     <select id="querySeasonList" resultType="Season">
         SELECT
-            id, PlateNo as deviceIU, PlateNo2 as vehicleNo,BeginDate as effectiveDate , EndDate as expiredDate,
-            CreateDate as createDatetime, ChangeTime as updateDatetime
-        FROM carissueinfo
+            id, device_iu as deviceIU, vehicle_no as vehicleNo, effective_date as effectiveDate , expired_date as expiredDate,
+            create_datetime as createDatetime, update_datetime as updateDatetime
+        FROM t_season
     </select>
 
     <select id="queryHolidayList" parameterType="string" resultType="Holiday" >

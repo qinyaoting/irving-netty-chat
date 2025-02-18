@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://192.168.1.199:3366/parkingspt?useUnicode=true&SslMode=None&characterEncoding=UTF-8&serverTimezone=UTC
+    url: jdbc:mysql://192.168.1.199:3366/cwgl?useUnicode=true&SslMode=None&characterEncoding=UTF-8&serverTimezone=UTC
     username: root
     password: qyisno1forever@world
     driver-class-name: com.mysql.cj.jdbc.Driver

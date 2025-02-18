@@ -14,12 +14,12 @@
 
     <insert id="insertTranList" >
         insert into t_trans (create_datetime,device_iu,card_can,card_type,enter_datetime,hour_rate,vehicle_type,pay_type,tax_rate,entry_gate_num, pay_status,
-                           exit_id,entry_id,exit_gate_num,leave_datetime,total_second,cost,tax_cost,total_cost,pay_datetime,pay_card,attach_json,auto_payment_payload_id,receipt_id)
+                           exit_id,entry_id,exit_gate_num,leave_datetime,total_second,cost,tax_cost,total_cost,pay_datetime,pay_card,attach_json,auto_payment_payload_id,receipt_id, update_datetime)
             values
             <foreach collection="trans" item="tran" separator=",">
                 (#{tran.createDatetime},#{tran.deviceIU},#{tran.cardCan},#{tran.cardType},#{tran.enterDatetime},#{tran.hourRate},#{tran.vehicleType},#{tran.payType},#{tran.taxRate},#{tran.entryGateNum},#{tran.payStatus},
                    #{tran.exitId},#{tran.entryId},#{tran.exitGateNum},#{tran.leaveDatetime},#{tran.totalSecond},#{tran.cost},#{tran.taxCost},#{tran.totalCost},#{tran.payDatetime},#{tran.payCard},#{tran.attachJson},
-                   #{tran.autoPaymentPayloadId},#{tran.receiptId})
+                   #{tran.autoPaymentPayloadId},#{tran.receiptId}, now())
             </foreach>
     </insert>
 
