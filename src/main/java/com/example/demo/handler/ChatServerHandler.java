@@ -73,7 +73,7 @@ public class ChatServerHandler  extends SimpleChannelInboundHandler<String> {
                 .event("heartbeat").createDatetime(now).updateDatetime(now)
                 .attachJson(str)
                 .build();
-        //TransService.saveDeviceStatus(deviceStatus);
+        TransService.saveDeviceStatus(deviceStatus);
         String[] parts = msg.split("\\|");
 
         if ( contains(new String[]{"FSI", "FHI","FSO", "FHO"}, parts[1])) {
